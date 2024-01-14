@@ -1,0 +1,19 @@
+services:
+  comfyui:
+    build:
+      context: .
+      args:
+        NEW_MAMBA_USER_ID: 1000
+        NEW_MAMBA_USER_GID: 1000
+    network_mode: host
+    command: python main.py
+    working_dir: /project
+    volumes:
+      - ".:/project"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '0' ]
+              capabilities: [ gpu ]
