@@ -28,7 +28,8 @@ COPY --chown=$MAMBA_USER:$MAMBA_USER env.yaml env.yaml
 RUN micromamba install --name base --verbose --yes --file env.yaml && \
     micromamba clean --all --yes
 
-#ARG MAMBA_DOCKERFILE_ACTIVATE=1
-#USER root
-#RUN apt-get update -yqq && apt-get install -y libssl-dev cmake
-#USER $MAMBA_USER
+ARG MAMBA_DOCKERFILE_ACTIVATE=1
+USER root
+RUN apt-get update -yqq && apt-get install -y ffmpeg libsm6 libxext6 fontconfig
+RUN pip install --no-cache-dir pydantic simpleeval omegaconf
+USER $MAMBA_USER
